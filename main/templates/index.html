@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <title>ASCII Art Generator</title>
+
+  </head>
+<body>
+
+    <div class="container">
+        <button class="reload btn" onclick="window.location='/';"><span >Refresh &#x21bb;</span></button>
+        <!-- To flash any error messages to the user -->
+        {% with messages=get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} ">
+                {{ message }}
+              </div>   
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+
+                <form method="POST" class="form-horizontal" action="/" enctype="multipart/form-data">
+                        {{ form.csrf_token }}
+                        <!-- for uploading an image -->
+                        <div id="form">
+
+                            <div class="file-upload">
+                            {{form.picture.label(class="btn btn-primary form-control", id="attach")}}
+                            <label onclick="resetPreview();" class="btn btn-danger form-control" id="detach">Ew!!Take That Off..</label>
+                            <hr>
+                            <div id="hideinput">
+                                {{ form.picture(id='picture', onchange="previewImage();")}}
+                            </div>
+
+                            {% if form.picture.errors %}
+                                <ul class=errors>
+                                {% for error in form.picture.errors %}
+                                <li>{{ error }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+
+                              <button type="submit" class="btn btn-success form-control">Convert!</button>
+                              
+                              <div id="file-upload-tweaks">
+
+                              </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- provide preview of the image to be uploaded -->
+                <div id="snap-preview-container">
+                    <center><h5>Attached Snap</h5></center>
+                    <img id="snap-preview"/>
+                </div>          
+
+                
+                <div id="result">
+                    {% if result %}
+                    <div class="form-inline" id="download">
+                                <input type="text" id="downloadname" class="form-control" placeholder="Enter a name...">
+                                <button class="btn" onclick="downloadText();">Download</button>                
+                    </div>
+                    {%endif%}
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------->
+<!-- The output ASCII art -->
+<pre id="resultcanvas">
+{% if result %}
+{% for i in result %}
+{{i}}
+{%endfor%}
+{% endif %}
+</pre>
+<!-- ---------------------------------------------------------------------------------------------------------------------------->
+
+                </div>
+
+    </div>
+
+</body>
+</html>

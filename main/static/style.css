@@ -1,0 +1,48 @@
+.reload {
+    font-family: "Lucida Sans Unicode";
+    position: fixed;
+    top: 0;
+    right: 0; 
+}
+
+.errors{
+   list-style-type: none;
+   color: coral;
+}
+
+#hideinput{
+    display: none;
+}
+
+#form{
+    padding: 10px;
+}
+
+#detach{
+    display: none;
+}
+
+#resultcanvas{
+    line-height: 2px;
+    font-size: 3px;
+    text-align: center;
+    border:none; 
+    background: white;
+    width: 100%;
+    margin:0;
+    padding: 0;   
+}
+
+#snap-preview{
+    max-width: 100%;
+    height: auto;
+}
+
+#snap-preview-container{
+    display:none;
+}
+
+#download{
+    display: block;
+    text-align: center;
+}
